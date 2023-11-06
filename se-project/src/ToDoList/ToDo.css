@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+:root {
+    --list-width: 30vw;
+    --edit-width:40vw;
+    --blue: #D2E0FB;
+    --yellow:#F9F3CC;
+    --sage: #D7E5CA;
+    --dark-blue: #8EACCD;
+    --dark-green: #415033;
+
+
+}
+.App {
+    display: flex;
+    flex-direction: column;
+}
+.ToDoItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: fit-content;
+    height: fit-content;
+}
+.toDoText {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    overflow-wrap: break-word;
+
+}
+
+.EditToDo {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    gap: 0.5em;
+}
+.EditToDoCard {
+    width: fit-content;
+    align-self: center;
+    padding:  1em;
+    position: relative;
+}
+#editButton {
+    align-self: flex-end;
+    width: fit-content;
+}
+.updateToDo {
+    padding: 1em;
+    margin: 1em;
+    position: relative;
+    
+}
+.disabled {
+    text-decoration: line-through;
+    max-height: var(--list-width);
+    overflow-y: hidden;
+}
+.completed {
+    min-width: var(--list-width);
+    width: fit-content;
+}
+.scrollable {
+    overflow-y: scroll;
+    width: fit-content;
+    height: var(--list-width);
+}
+.ToDoFull {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80vw;
+    position: relative;
+}
+.tools {
+    display: flex;
+    flex-direction: column;
+}
+.toDoText-editmode {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 0em;
+    width: 60vw;
+
+}
+.todolist {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: flex-start;
+    width: fit-content;
+    padding: 1em;
+    height: fit-content;
+}
+.addToDoButton {
+    width: 2em;
+    height: 2em;
+    color: var(--dark-green);
+    font-size: "1em";
+    justify-self: "center";
+    border: none;
+    border-radius: 1em;
+    padding: 0.2em;
+    font-weight: bolder;
+    font-size:xx-large;
+}
+.closeButton {
+    color: var(--dark-green);
+    height: 100%;
+    border-radius: 0.25em;
+}
+         
+.btn-grad {
+    background-image: linear-gradient(to right, #DAD299 0%, #B0DAB9  51%, #DAD299  100%);
+    transition: 0.5s;
+    background-size: 200% auto;
+    box-shadow: 0 0 20px #eee;
+    border:none;
+  }
+
+  .btn-grad:hover {
+    background-position: right center; /* change the direction of the change here */
+    color: #fff;
+  }
+ 
+.p-inplace{
+    border: none;
+    font-family: 'Roboto', sans-serif;
+}
+
+.tool-item {
+    color: var(--dark-green);
+    accent-color: var(--dark-green);
+}
+.ToDoContent {
+    max-width: 50em;
+}
+.ToDoContent > * {
+    overflow-wrap: break-word;
+}
+
+.contentFlow {
+     display: flex;
+     flex-direction: row;
+     flex-wrap: wrap;
+}
+.tabPanel {
+    width: 90vw;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+}
+.editCluster {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+}

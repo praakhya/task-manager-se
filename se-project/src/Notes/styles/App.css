@@ -1,0 +1,14 @@
+/*---- Login Page ------------*/
+.auth-view {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-form-wrap {
+    padding: 16px;
+    width: 600px;
+    /* background-color: #ececec; */
+    margin-top: 32px;
+}
