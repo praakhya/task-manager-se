@@ -18,7 +18,7 @@ const DeleteNoteModal = (props) => {
 					<Button variant='secondary' onClick={props.handleClose}>
 						Cancel
 					</Button>
-					<Button variant='primary' onClick={props.handleDelete} style={{ backgroundColor: '#fd5d5b', borderColor: '#fd5d5b', width: 100 }}>
+					<Button variant='primary' onClick={props.handleDelete} style={{ backgroundColor: 'var(--dark-green)', borderColor: 'var(--dark-green)' }}>
 						Delete
 					</Button>
 				</Modal.Footer>

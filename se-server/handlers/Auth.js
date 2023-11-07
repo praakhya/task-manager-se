@@ -32,7 +32,7 @@ const handleLogin = async (req, res) => {
 			res.send({ status: 'error', message: 'Error in Update' })
 			return
 		}
-	}
+	})
 }
 
 const handleSignup = async (req, res) => {

@@ -6,9 +6,8 @@ import AppRouter from './router/router.jsx'
 import AppContext from './contexts/AppContext'
 function Notes() {
 	const _storedUserInfo = sessionStorage.getItem('userInfo')
-	const [userInfo, setUserInfo] = useState(null)
+	const [userInfo, setUserInfo] = useState((_storedUserInfo == null || _storedUserInfo == undefined) ? null : JSON.parse(_storedUserInfo))
 	console.log("stored user info:",_storedUserInfo)
-	//const [userInfo, setUserInfo] = useState((_storedUserInfo == null || _storedUserInfo == undefined) ? null : JSON.parse(_storedUserInfo))
 
 	const handleSetUserInfo = (_userInfo) => {
 		sessionStorage.setItem('userInfo', JSON.stringify(_userInfo))

@@ -86,6 +86,7 @@ const LoginView = () => {
 					}
 					setLoginError(false)
 					appContext.setUserInfo(response.data.userInfo)
+					sessionStorage.setItem('userInfo', JSON.stringify(response.data.userInfo))
 					console.log("User info after setting in client:",appContext.userInfo)
 					navigate('/notes')
 					

@@ -15,8 +15,8 @@ const AllNotes = (props) => {
 			<div style={{ display: 'flex', marginBottom: 24 }}>
 				<div style={{ flex: 1, fontSize: 24, marginLeft: 28, marginTop: 12 }}>All Notes</div>
 				<div>
-					<Button onClick={handleAddNote} style={{ backgroundColor: '#fd5d5b', borderColor: '#fd5d5b', width: 180, marginTop: 16 }}>
-						&nbsp;&nbsp;&nbsp;Add New Note&nbsp;&nbsp;&nbsp;
+					<Button onClick={handleAddNote} style={{ backgroundColor: 'var(--dark-green)', borderColor: 'var(--dark-green)', width: 180, marginTop: 16 }}>
+						Add New Note
 					</Button>
 				</div>
 			</div>

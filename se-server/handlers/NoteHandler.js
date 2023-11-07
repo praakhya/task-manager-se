@@ -1,16 +1,24 @@
 let NotesModel = require('../models/Notes')
+const http = require('http')
 
 //---------------Get Notes --------------------
 const handleGetNotes = function (req, res) {
-	console.log('Note:get notes',req.body)
+	var headers = req.get("Authorization").split(";")
+	var accessToken = headers[0].split("=")[1]
+	var username = headers[1].split("=")[1]
+	console.log('Note:get notes',accessToken, username)
+	if (accessToken) {
 	NotesModel.find(
 		{
-			username: req.userInfo.username
-		},
-		function (err, notes) {
-			res.send({ notes: notes })
+			username: username
 		}
-	)
+	).exec().then((notes) => {
+		res.send({ notes: notes })
+	}).catch((err)=>{
+		console.log("error in handleGetNotes")
+		throw new err
+	})
+}
 }
 
 //---------------Get Note --------------------
@@ -22,22 +30,28 @@ const handleGetNote = function (req, res) {
 
 //---------------Create Note --------------------
 const handleCreateNote = function (req, res) {
+	var headers = req.get("Authorization").split(";")
+	console.log("in handle create note:",headers)
+	var accessToken = headers[0].split("=")[1]
+	var username = headers[1].split("=")[1]
 	let data = req.body
-	console.log('Note:Create: Request Data:', JSON.stringify(data))
+	console.log(username,accessToken)
+	console.log('Note:Create: Request Data:', data)
+	if (accessToken) {
+		var new_note = new NotesModel({
+			title: data.title,
+			description: data.description,
+			username: username
+		})
 
-	var new_note = new NotesModel({
-		title: data.title,
-		description: data.description,
-		username: req.userInfo.username
-	})
-
-	new_note.save(function (err, result) {
-		if (err) {
-			res.send({ status: 'error' })
-		} else {
+		new_note.save().then((result)=>{
+			console.log("result of save:",result)
 			res.send({ status: 'success' })
-		}
-	})
+		}).catch((err)=>{
+			console.log("error in save",err)
+			res.send({ status: 'error' })
+		})
+	}
 }
 
 //---------------Update Note --------------------
@@ -91,13 +105,11 @@ const handleMarkAsFavourite = (req, res) => {
 		return
 	}
 
-	NotesModel.findOneAndUpdate({ _id: data.noteId }, { isFavourite: data.isFavourite }, { upsert: true }, (err, doc) => {
-		if (err) {
-			console.log('Note:Update -  Error: ', err)
-			res.send({ status: 'error', message: 'Error in Update' })
-			return
-		}
-		res.send({ status: 'success' })
+	NotesModel.findOneAndUpdate({ _id: data.noteId }, { isFavourite: data.isFavourite }, { upsert: true }).exec().then((doc) => {
+		console.log('found and update response:',doc)
+			res.send({ status: 'success' })
+	}).catch(()=>{
+		res.send({ status: 'error', message: 'Error in Update' })
 	})
 }
 

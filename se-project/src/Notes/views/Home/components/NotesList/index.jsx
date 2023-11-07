@@ -13,21 +13,36 @@ const baseUrl = "/api"
 const NotesList = (props, ref) => {
 	const [isLoading, setIsLoading] = useState(true)
 	const [notesList, setNotesList] = useState([])
-	const { userInfo } = useContext(AppContext)
+	const appContext = useContext(AppContext)
+	var storedUserInfo = JSON.parse(sessionStorage.getItem("userInfo"))
+	console.log("Stored user info:",storedUserInfo, typeof(storedUserInfo))
+	if (!appContext.userInfo) {
+		appContext.setUserInfo(storedUserInfo)
+
+	}
 	const [currentNote, setCurrentNote] = useState(null)
 	const [isShowAddNote, setShowAddNote] = useState(false)
 	const [isShowDeleteModal, setShowDeleteModal] = useState(false)
-
-	const headers = {
-		Authorization: 'accessToken=' + userInfo.accessToken + ';username=' + userInfo.username
+	var headers = {}
+	if (appContext.userInfo) {
+		headers = {
+			Authorization: 'accessToken=' + appContext.userInfo.accessToken + ';username=' + appContext.userInfo.username
+		}
 	}
+	else {
+		headers = {
+			Authorization: 'accessToken=;username='
+		}
+	}
+	
 
 	useEffect(() => {
 		console.log("In useEffect body of noteslist")
 		getNotesList()
-	}, [])
+	}, [isLoading])
 
 	const getNotesList = () => {
+		console.log("headers:",headers)
 		axios
 			.get(baseUrl+'/load/notes', { headers: headers })
 			.then((res) => {
@@ -61,7 +76,7 @@ const NotesList = (props, ref) => {
 		console.log('Mark as Favourite Note Invoked', note)
 
 		const headers = {
-			Authorization: 'accessToken=' + userInfo.accessToken + ';username=' + userInfo.username
+			Authorization: 'accessToken=' + appContext.userInfo.accessToken + ';username=' + appContext.userInfo.username
 		}
 
 		axios
@@ -93,7 +108,7 @@ const NotesList = (props, ref) => {
 
 	const handleDeleteNote = (note) => {
 		const headers = {
-			Authorization: 'accessToken=' + userInfo.accessToken + ';username=' + userInfo.username
+			Authorization: 'accessToken=' + appContext.userInfo.accessToken + ';username=' + appContext.userInfo.username
 		}
 
 		axios
