@@ -1,0 +1,26 @@
+.slider {
+  width: 80% !important;
+  height: 40px;
+  border: 2px solid var(--red);
+  border-radius: 20px;
+}
+
+.thumb {
+  width: 40px; /* Set the desired width for the thumb (e.g., 40px) */
+  height: 40px;
+  border-radius: 15px;
+  background-color: var(--red);
+  cursor: pointer;
+}
+
+/* Add similar styles for the green slider if needed */
+.slider.green {
+  border: 2px solid var(--green);
+}
+
+.slider.green .thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: 15px;
+  background-color: var(--green);
+}

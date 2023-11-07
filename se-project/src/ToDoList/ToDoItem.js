@@ -140,13 +140,13 @@ class ToDoItem extends Component {
 
                         <Inplace closable onClose={this.callUpdateToDo} className='ToDoContent'>
                             <InplaceDisplay>
-                                <div class={textStyle}>
+                                <div className={textStyle}>
                                     <div style={{fontWeight: "bold"}}>{this.state.titleText || this.props.todo.title}</div>
                                     <div>{this.state.descriptionText || this.props.todo.description}</div>
                                 </div>
                             </InplaceDisplay>
                             <InplaceContent className="InplaceContent">
-                                <div class={textStyle}>
+                                <div className={textStyle}>
                                     <TextField
                                         id="standard-basic"
                                         label="Title"

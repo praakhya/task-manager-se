@@ -21,7 +21,7 @@ const AppLayout = () => {
 
 	return (
 		<div className="appDiv">
-			<Navbar className='app-nav-bar' style={{ paddingTop: 0, paddingBottom: 0 }}>
+			<Navbar className='app-nav-bar' style={{ paddingTop: 0, paddingBottom: 0, width:"100vw" }}>
 				<Container style={{ background: 'white' }}>
 					<Navbar.Brand href='/'>
 						<span style={{ fontSize: 24, fontWeight: 'bold', color: 'var(--sage)' }}>

@@ -1,9 +1,9 @@
 import React, { Suspense, useState } from 'react'
-import './styles/App.css'
+import './Notes/styles/App.css'
 import { BrowserRouter } from 'react-router-dom'
-import AppRouter from './router/router.jsx'
+import AppRouter from './router.jsx'
 
-import AppContext from './contexts/AppContext'
+import AppContext from './Notes/contexts/AppContext.js'
 function Notes() {
 	const _storedUserInfo = sessionStorage.getItem('userInfo')
 	const [userInfo, setUserInfo] = useState((_storedUserInfo == null || _storedUserInfo == undefined) ? null : JSON.parse(_storedUserInfo))

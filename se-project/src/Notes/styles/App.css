@@ -1,4 +1,9 @@
 /*---- Login Page ------------*/
+.app {
+    width: 100vw;
+    background-color: white;
+    
+}
 .auth-view {
     display: flex;
     flex-direction: row;
@@ -11,4 +16,99 @@
     width: 600px;
     /* background-color: #ececec; */
     margin-top: 32px;
+}
+.app-nav-bar{
+    z-index: 100;
+    width: 100vw;
+    margin: none
+}
+.navbar{
+    z-index: 100;
+    width: 100vw;
+    margin: none
+}
+
+/*---- Global Styles ---------*/
+:root {
+    --list-width: 30vw;
+    --edit-width:40vw;
+    --blue: #D2E0FB;
+    --yellow:#F9F3CC;
+    --sage: #a3bb8d;
+    --dark-blue: #8EACCD;
+    --dark-green: #415033;
+
+
+}
+/*---- Landing Page ----------*/
+.inputField {
+    max-width: 80vw;
+}
+.landingDiv {
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 80vw;
+    height: fit-content;
+    margin-top: 10%;
+    gap: 1vw;
+}
+.notesButton {
+    background-color: 'var(--dark-green)';
+    border-color: 'var(--dark-green)';
+    width: 40%;
+    margin-top: 10%;
+}
+.img-column {
+    align-items: center;
+    max-width: 30vw;
+    overflow: hidden;
+    border-radius: 1em;
+}
+.column {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    height: 40vh;
+}
+/*---- Login Page ------------*/
+.auth-view {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+}
+.appDiv {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-form-wrap {
+    padding: 16px;
+    width: 600px;
+    /* background-color: #ececec; */
+    margin-top: 32px;
+}
+.app-content {
+    height: 100vh;
+}
+.container {
+    display: flex;
+}
+
+.notesLink {
+    text-decoration: 'none';
+    color: var(--sage);
+    
+}
+.allNotesDiv {
+    display: flex;
+    flex-direction: column;
+}
+.allNotesTitleDiv {
+    display: flex;
+    flex-direction: column;
 }
