@@ -6,8 +6,8 @@ const User = require('./../models/User')
 
 const handleLogin = async (req, res) => {
 	let data = req.body
-	console.log("req at login:",req)
-	const user = await User.findOne({ username: data.username })
+	console.log("req at login:",req.body)
+	var user = await User.findOne({ username: data.username }).exec()
 	console.log("user in login:",user)
 	if (!user) {
 		res.send({ status: 'error', message: "User id doesn't exist" })
@@ -23,14 +23,16 @@ const handleLogin = async (req, res) => {
 
 	let accessToken = crypto.randomBytes(16).toString('hex')
 	console.log("accessToken in login:",accessToken)
-	User.updateOne({ username: data.username }, { accessToken: accessToken }, { upsert: true }, (err, doc) => {
-		console.log(err, doc)
+	updateStatus = await User.updateOne({ username: data.username }, { accessToken: accessToken }, { upsert: true }).exec()
+	console.log("in callback:",updateStatus)
+	user = await User.findOne({ username: data.username }).exec().then(
+	res.send({ status: 'success', userInfo: { name: user.name, username: data.username, accessToken: accessToken, email: user.email, mobileNumber: user.mobileNumber } })
+	).catch((err)=>{
 		if (err) {
 			res.send({ status: 'error', message: 'Error in Update' })
 			return
 		}
-		res.send({ status: 'success', userInfo: { name: user.name, username: data.username, accessToken: accessToken, email: user.email, mobileNumber: user.mobileNumber } })
-	})
+	}
 }
 
 const handleSignup = async (req, res) => {
