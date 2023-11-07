@@ -1,9 +1,10 @@
 import React, { Suspense, useState } from 'react'
-import './Notes/styles/App.css'
+import './styles/App.css'
 import { BrowserRouter } from 'react-router-dom'
 import AppRouter from './router.jsx'
 
-import AppContext from './Notes/contexts/AppContext.js'
+import AppContext from './contexts/AppContext.js'
+import MiniDrawer from './MiniDrawer.js'
 function Notes() {
 	const _storedUserInfo = sessionStorage.getItem('userInfo')
 	const [userInfo, setUserInfo] = useState((_storedUserInfo == null || _storedUserInfo == undefined) ? null : JSON.parse(_storedUserInfo))
@@ -23,7 +24,8 @@ function Notes() {
 			<AppContext.Provider value={contextValue}>
 				<Suspense fallback={<div></div>}>
 					<BrowserRouter>
-						<AppRouter />
+					
+						<AppRouter />						
 					</BrowserRouter>
 				</Suspense>
 			</AppContext.Provider>

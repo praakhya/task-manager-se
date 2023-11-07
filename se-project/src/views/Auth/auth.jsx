@@ -5,7 +5,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import AppContext from '../../contexts/AppContext'
-import "../../../App.css"
+import "../../App.css"
 const LoginView = () => {
 	const appContext = useContext(AppContext)
 	const [authType, setAuthType] = useState('login') //login | signup
@@ -51,7 +51,7 @@ const LoginView = () => {
 					}
 					setSignupError(false)
 					appContext.setUserInfo(response.data.userInfo)
-					navigate('/notes')
+					navigate('/home')
 				}
 			})
 			.catch((error) => {

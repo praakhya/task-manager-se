@@ -1,4 +1,3 @@
-import '../App.css';
 import React, { Component, useState, setState } from 'react';
 import './ToDo.css'
 import { Button, Card, Checkbox } from '@mui/material';

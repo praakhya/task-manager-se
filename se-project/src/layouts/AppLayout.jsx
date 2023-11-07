@@ -5,13 +5,15 @@ import Container from 'react-bootstrap/Container'
 import Navbar from 'react-bootstrap/Navbar'
 import AppContext from '../contexts/AppContext'
 import "../App.css"
+import MiniDrawer from '../MiniDrawer'
 const AppLayout = () => {
 	const { userInfo, setUserInfo } = useContext(AppContext)
-
+	console.log(userInfo)
 	const navigate = useNavigate()
 
 	const handleLogoutClick = (e) => {
 		setUserInfo(null)
+		sessionStorage.clear()
 		navigate('/')
 	}
 
@@ -21,11 +23,11 @@ const AppLayout = () => {
 
 	return (
 		<div className="appDiv">
-			<Navbar className='app-nav-bar' style={{ paddingTop: 0, paddingBottom: 0, width:"100vw" }}>
+			<Navbar className='app-nav-bar' style={{ paddingTop: 0, paddingBottom: 0, margin: "none", width:"100vw" }}>
 				<Container style={{ background: 'white' }}>
 					<Navbar.Brand href='/'>
 						<span style={{ fontSize: 24, fontWeight: 'bold', color: 'var(--sage)' }}>
-							Note<span style={{ color: 'var(--dark-green)' }}>Book</span>
+							Ze<span style={{ color: 'var(--dark-green)' }}>Me</span>
 						</span>
 					</Navbar.Brand>
 					<Navbar.Toggle />
@@ -52,6 +54,8 @@ const AppLayout = () => {
 					</Navbar.Collapse>
 				</Container>
 			</Navbar>
+
+			{userInfo && userInfo.accessToken ? <MiniDrawer></MiniDrawer>: <div></div>}
 			<div className='app-content container'>
 				<Outlet />
 			</div>

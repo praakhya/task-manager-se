@@ -2,7 +2,7 @@ import React from 'react'
 import Button from 'react-bootstrap/esm/Button'
 import { NavLink } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
-import landingPageImg from '../../../assets/landingPageImg.jpg'
+import landingPageImg from '../../assets/landingPageImg.jpg'
 import "../../App.css"
 const LandingView = () => {
 	const navigate = useNavigate()

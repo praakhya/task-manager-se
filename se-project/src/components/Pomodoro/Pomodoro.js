@@ -4,7 +4,7 @@ import Timer from "./Timer";
 import Settings from "./Settings";
 import Main from "./main"; // Import the Main component
 import "./App.css";
-import AppContext from "../Notes/contexts/AppContext";
+import AppContext from "../../contexts/AppContext";
 import { useNavigate } from "react-router-dom";
 function Pomodoro() {
   console.log("Pomodoro")
