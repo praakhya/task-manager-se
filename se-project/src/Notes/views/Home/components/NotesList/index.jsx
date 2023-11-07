@@ -23,6 +23,7 @@ const NotesList = (props, ref) => {
 	}
 
 	useEffect(() => {
+		console.log("In useEffect body of noteslist")
 		getNotesList()
 	}, [])
 
@@ -30,6 +31,7 @@ const NotesList = (props, ref) => {
 		axios
 			.get(baseUrl+'/load/notes', { headers: headers })
 			.then((res) => {
+				console.log("Response in getnoteslist:",res)
 				if (res && res.data && res.data.notes) {
 					setNotesList(res.data.notes)
 				} else {

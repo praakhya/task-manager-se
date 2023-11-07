@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import AppContext from '../../contexts/AppContext'
 import "../../../App.css"
 const LoginView = () => {
-	let { setUserInfo } = useContext(AppContext)
+	const appContext = useContext(AppContext)
 	const [authType, setAuthType] = useState('login') //login | signup
 
 	const [lUserName, setLUserName] = useState('')
@@ -50,7 +50,7 @@ const LoginView = () => {
 						return
 					}
 					setSignupError(false)
-					setUserInfo(response.data.userInfo)
+					appContext.setUserInfo(response.data.userInfo)
 					navigate('/notes')
 				}
 			})
@@ -62,6 +62,7 @@ const LoginView = () => {
 	}
 
 	const handleLoginBtnClick = (e) => {
+		console.log("lusername, lpassword", lUserName, lPassword)
 		if (!lUserName || !lPassword) {
 			setLoginErrorMessage('Please fill the required fields!')
 			setLoginError(true)
@@ -84,15 +85,17 @@ const LoginView = () => {
 						return
 					}
 					setLoginError(false)
-					setUserInfo(response.data.userInfo)
+					appContext.setUserInfo(response.data.userInfo)
+					console.log("User info after setting in client:",appContext.userInfo)
 					navigate('/notes')
+					
 				}
 			})
 			.catch((error, res) => {
 				console.log("error in login client:",error)
 				setLoginErrorMessage('Error in user login!')
 				setLoginError(true)
-				setUserInfo({ name: 'Pranathi' })
+				//appContext.setUserInfo({ name: 'Pranathi' })
 				//navigate('/notes')
 			})
 	}
