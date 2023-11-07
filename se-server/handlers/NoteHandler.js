@@ -84,13 +84,12 @@ const handleDeleteNote = function (req, res) {
 		return
 	}
 
-	NotesModel.find({ _id: data.noteId }).deleteOne((err) => {
-		if (err) {
-			console.log('Note:delete -  Error: ', err)
-			res.send({ status: 'error', message: 'Error in delete' })
-			return
-		}
+	NotesModel.find({ _id: data.noteId }).deleteOne().then((delStatus) => {
+		console.log("Delete status:",delStatus)
 		res.send({ status: 'success' })
+	}).catch((err)=>{
+		console.log('Note:delete -  Error: ', err)
+		res.send({ status: 'error', message: 'Error in delete' })
 	})
 }
 
