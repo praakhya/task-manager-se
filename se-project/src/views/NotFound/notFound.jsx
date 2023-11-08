@@ -8,7 +8,6 @@ const NotFoundView = () => {
 	return (
 		<div style={{ marginTop: 32 }}>
 			<h3>404 Not Found</h3>
-			<hr style={{ margin: '12px 0px' }} />
 			<NavLink to={'/'}>Home</NavLink>
 		</div>
 	)

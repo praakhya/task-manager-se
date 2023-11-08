@@ -3,7 +3,7 @@ import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Pomodoro from "./components/Pomodoro/Pomodoro"
 import ToDo from './components/ToDoList/ToDo'
-import MiniDrawer from './MiniDrawer'
+import MiniDrawer from './components/MiniDrawer'
 import UserHome from './UserHome'
 
 const LandingView = React.lazy(() => import('./views/Landing/landing'))

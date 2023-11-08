@@ -4,7 +4,6 @@ import { BrowserRouter } from 'react-router-dom'
 import AppRouter from './router.jsx'
 
 import AppContext from './contexts/AppContext.js'
-import MiniDrawer from './MiniDrawer.js'
 function Notes() {
 	const _storedUserInfo = sessionStorage.getItem('userInfo')
 	const [userInfo, setUserInfo] = useState((_storedUserInfo == null || _storedUserInfo == undefined) ? null : JSON.parse(_storedUserInfo))

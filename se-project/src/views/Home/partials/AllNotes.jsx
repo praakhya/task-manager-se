@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react'
-import NotesList from '../../components/NotesList'
+import NotesList from '../components/NotesList'
 import Button from 'react-bootstrap/esm/Button'
-import ManageNote from './../../components/ManageNote'
-
+import ManageNote from '../components/ManageNote'
+import "../Notes.css"
 const AllNotes = (props) => {
 	const [isShowAddNote, setShowAddNote] = useState(false)
 
@@ -13,12 +13,14 @@ const AllNotes = (props) => {
 	}
 
 	return (
-		<div className="allNotesDiv">
-			<div className="allNotesTitleDiv">
-				<div>All Notes</div>
+		<div>
+			<div className='allNotesHeader'>
+				<h1>All Notes</h1>
 				<div>
-					<Button onClick={handleAddNote} style={{ backgroundColor: 'var(--dark-green)', borderColor: 'var(--dark-green)', width: 180 }}>
-						&nbsp;&nbsp;&nbsp;Add New Note&nbsp;&nbsp;&nbsp;
+					<Button onClick={handleAddNote} 
+					style={{ backgroundColor: 'var(--dark-green)', borderColor: 'var(--dark-green)'}}
+					className='addNoteButton'>
+						Add New Note
 					</Button>
 				</div>
 			</div>

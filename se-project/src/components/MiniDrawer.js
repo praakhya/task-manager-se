@@ -2,7 +2,8 @@ import { IconButton } from "@mui/material"
 import { useContext, useState } from "react";
 import { MdMenu, MdStickyNote2, MdTaskAlt, MdOutlineTimer } from "react-icons/md";
 import { useNavigate, Outlet } from "react-router-dom";
-import AppContext from "./contexts/AppContext";
+import AppContext from "../contexts/AppContext";
+import "../App.css"
 function MiniDrawer() {
   const [navBar, setNavBar] = useState(false)
   const appContext = useContext(AppContext)

@@ -6,6 +6,7 @@ import Card from 'react-bootstrap/Card'
 import axios from 'axios'
 import { MdOutlineModeEditOutline, MdFavoriteBorder, MdDeleteOutline } from 'react-icons/md'
 import AppContext from '../../../../contexts/AppContext'
+import "../../Notes.css"
 
 import ManageNote from '../ManageNote'
 import DeleteNoteModal from '../DeleteNote'
@@ -126,27 +127,27 @@ const NotesList = (props, ref) => {
 	}
 
 	return (
-		<div className='home-view' style={{ minHeight: 400 }}>
+		<div className='home-view'>
 			{isLoading ? (
 				<Spinner size={'md'} />
 			) : (
 				<div>
 					{notesList.length ? (
-						<ul className='row'>
+						<ul>
 							{notesList.map((note) => {
 								let date = new Date(note.createdAt)
 								let formattedDate = new Intl.DateTimeFormat('en-GB', { dateStyle: 'medium' }).format(date)
 
 								return (
-									<li key={note._id} className={'col-md-4'} style={{ listStyle: 'none', marginTop: 24 }}>
-										<Card>
-											<Card.Body>
-												<Card.Title>{note.title}</Card.Title>
-												<Card.Text>{note.description}</Card.Text>
-												<Card.Text>
+									<li key={note._id}>
+										<div>
+											<div>
+												<div>{note.title}</div>
+												<div>{note.description}</div>
+												<div>
 													<span style={{ display: 'flex' }}>
-														<span style={{ flex: 1, color: 'rgb(123, 123, 123)' }}>{formattedDate}</span>
-														<span style={{ flex: 2, textAlign: 'right' }}>
+														<span>{formattedDate}</span>
+														<span>
 															<span>
 																<MdFavoriteBorder
 																	size={20}
@@ -156,7 +157,7 @@ const NotesList = (props, ref) => {
 																	}}
 																/>
 															</span>
-															<span style={{ marginLeft: 8 }}>
+															<span>
 																<MdOutlineModeEditOutline
 																	size={20}
 																	style={{ cursor: 'pointer' }}
@@ -165,7 +166,7 @@ const NotesList = (props, ref) => {
 																	}}
 																/>
 															</span>
-															<span style={{ marginLeft: 8 }}>
+															<span>
 																<MdDeleteOutline
 																	size={20}
 																	style={{ cursor: 'pointer' }}
@@ -176,9 +177,9 @@ const NotesList = (props, ref) => {
 															</span>
 														</span>
 													</span>
-												</Card.Text>
-											</Card.Body>
-										</Card>
+												</div>
+											</div>
+										</div>
 									</li>
 								)
 							})}

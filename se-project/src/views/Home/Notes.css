@@ -1,0 +1,21 @@
+.allNotesHeader {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap:3em;
+    justify-content: center;
+    align-items: center;
+}
+.addNoteButton {
+    width: fit-content;
+}
+.sideMenuContainer{
+    height: calc(100vh - 60px); 
+    padding-top: 20;
+    border-right: 0.25px solid #ececec
+}
+.home-view {
+    width: 100vw;
+    position: absolute;
+    left:0;
+}

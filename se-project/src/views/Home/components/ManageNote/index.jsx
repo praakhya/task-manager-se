@@ -85,7 +85,7 @@ const ManageNote = (props) => {
 					<div>
 						{error && <label style={{ color: 'red' }}>{errorMessage}</label>}
 						<Form>
-							<Form.Group className='mb-3'>
+							<Form.Group>
 								<Form.Label>Title</Form.Label>
 								<Form.Control
 									type='text'
@@ -97,7 +97,7 @@ const ManageNote = (props) => {
 								/>
 							</Form.Group>
 
-							<Form.Group className='mb-3'>
+							<Form.Group>
 								<Form.Label>Description</Form.Label>
 								<Form.Control
 									as='textarea'
