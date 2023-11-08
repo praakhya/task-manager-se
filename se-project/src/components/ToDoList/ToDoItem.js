@@ -1,7 +1,7 @@
-import React, { Component, useState, setState } from 'react';
+import React, { Component, useState, useContext } from 'react';
 import './ToDo.css'
 import { Button, Card, Checkbox } from '@mui/material';
-import { toDoContext } from './toDoContext';
+import { ToDoContext } from './toDoContext';
 import axios from 'axios';
 import { Inplace, InplaceDisplay, InplaceContent } from 'primereact/inplace';
 import { InputText } from 'primereact/inputtext';
@@ -10,181 +10,186 @@ import { MdDelete } from "react-icons/md";
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { TextField } from '@mui/material';
-class ToDoItem extends Component {
-    static contextType = toDoContext;
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            checked: this.props.defaultDone,
-            titleText: this.props.todo.title,
-            descriptionText: this.props.todo.description,
-            trashed: this.props.defaultTrash
+import AppContext from '../../contexts/AppContext';
+function ToDoItem(props) {
+    console.log("props in ToDoitem:",props)
+    const toDoContext = useContext(ToDoContext);
+    const appContext = useContext(AppContext);
+    const [checked,setChecked] = useState(props.defaultDone)
+    const [titleText, setTitleText] = useState(props.todo.title)
+    const [descriptionText, setDescriptionText] = useState(props.todo.description)
+    const [trashed, setTrashed] = useState(props.defaultTrash)
+    
+    const getHeader = () => {
+        var headers = {}
+        if (appContext.userInfo) {
+            headers = {
+                Authorization: 'accessToken=' + appContext.userInfo.accessToken + ';username=' + appContext.userInfo.username
+            }
+            return headers
         }
-        this.handleChange = this.handleChange.bind(this);
-        this.toggleToDo = this.toggleToDo.bind(this);
-        this.addCheckedToDo = this.addCheckedToDo.bind(this);
-        this.callUpdateToDo = this.callUpdateToDo.bind(this)
-        this.toggleTrash = this.toggleTrash.bind(this)
-        this.trashToDo = this.trashToDo.bind(this)
+        headers = {
+                Authorization: 'accessToken=;username='
+            }
+        return headers
     }
-    updateToDo(text, id, label) {
+    const updateToDo = (text, id, label) => {
+        var header = getHeader()
         console.log("in update ToDo: id=", id, "text=", text, "label=", label);
         var baseUrl = "/api";
-        axios.put(baseUrl + '/load/ToDo/update', { "_id": id, [label]: text, "label": label })
+        axios.put(baseUrl + '/load/ToDo/update', { "_id": id, [label]: text, "label": label }, {headers: header})
             .then(response => {
                 console.log("response on edit: ", response)
-                this.addUpdatedToDo(response.data)
+                addUpdatedToDo(response.data)
             })
             .catch((err) => {
-                console.log("err /api",err);
+                console.log("err /api", err);
             });
     }
-    setText(val, id, label) {
-        console.log("val: ", val, "id: ", id, "label: ", label, this.state)
+    const setText = (val, id, label) => {
+        console.log("val: ", val, "id: ", id, "label: ", label)
         if (label == "title") {
-            this.setState({ "titleText": val })
+            setTitleText(val)
         }
         else if (label == "description") {
-            this.setState({ "descriptionText": val })
+            setDescriptionText(val)
         }
 
     }
-    callUpdateToDo() {
-        console.log(this.state, this.props.todo._id, "title")
-        this.updateToDo(this.state.titleText, this.props.todo._id, "title")
-        this.updateToDo(this.state.descriptionText, this.props.todo._id, "description")
+    const callUpdateToDo = () => {
+        console.log(props.todo._id, "title")
+        updateToDo(titleText, props.todo._id, "title")
+        updateToDo(descriptionText, props.todo._id, "description")
     }
-    addCheckedToDo(todo) {
-        var list = this.context.toDoData;
+    const addCheckedToDo = (todo) => {
+        var list = toDoContext.toDoData;
         for (var i in list) {
             if (list[i]._id == todo._id) {
                 list[i].done = todo.done
             }
         }
-        this.context.setToDoData(list)
-        console.log(this.context.toDoData)
+        toDoContext.setToDoData(list)
+        console.log(toDoContext.toDoData)
     }
-    addTrashedToDo(todo) {
-        var list = this.context.toDoData;
+    const addTrashedToDo = (todo) => {
+        var list = toDoContext.toDoData;
         for (var i in list) {
             if (list[i]._id == todo._id) {
                 list[i].trashed = todo.trashed
             }
         }
-        this.context.setToDoData(list)
-        console.log(this.context.toDoData)
+        toDoContext.setToDoData(list)
+        console.log(toDoContext.toDoData)
     }
-    addUpdatedToDo(todo) {
-        var list = this.context.toDoData;
+    const addUpdatedToDo= (todo) => {
+        var list = toDoContext.toDoData;
         for (var i in list) {
             if (list[i]._id == todo._id) {
                 list[i].title = todo.title
                 list[i].description = todo.description
             }
         }
-        this.context.setToDoData(list)
-        console.log(this.context.toDoData)
+        toDoContext.setToDoData(list)
+        console.log(toDoContext.toDoData)
     }
-    toggleToDo(id, done) {
+    const toggleToDo = (id, done) => {
         console.log("in complete ToDo: ", id, done);
         var baseUrl = "/api";
-        axios.put(baseUrl + '/load/todo/complete', { "_id": id, "done": done })
+        var header = getHeader()
+        axios.put(baseUrl + '/load/todo/complete', { "_id": id, "done": done }, {headers:header})
             .then(response => {
                 console.log("response on edit: ", response)
-                this.addCheckedToDo(response.data)
+                addCheckedToDo(response.data)
             })
             .catch((err) => {
-                console.log("/api",err);
+                console.log("/api", err);
             });
     }
-    toggleTrash(id, trashed) {
+    const toggleTrash = (id, trashed) => {
         console.log("in complete ToDo: ", id, trashed);
         var baseUrl = "/api";
-        axios.put(baseUrl + '/load/ToDo/trash', { "_id": id, "trashed": trashed })
+        var header = getHeader()
+        axios.put(baseUrl + '/load/ToDo/trash', { "_id": id, "trashed": trashed },{headers:header})
             .then(response => {
                 console.log("response on trash: ", response)
-                this.addTrashedToDo(response.data)
+                addTrashedToDo(response.data)
             })
             .catch((err) => {
-                console.log("err /api",err);
+                console.log("err /api", err);
             });
     }
-    handleChange() {
-        var newDone = !this.state.checked
-        this.setState({ checked: newDone });
-        console.log("NEW CHECK: ", this.state.checked)
-        this.toggleToDo(this.props.todo._id, newDone)
+    const handleChange = () => {
+        var newDone = !checked
+        setChecked(newDone);
+        console.log("NEW CHECK: ", checked)
+        toggleToDo(props.todo._id, newDone)
     }
-    trashToDo() {
-        var newTrashed = !this.state.trashed
-        this.setState({ trashed: newTrashed });
-        console.log("NEW CHECK: ", this.state.trashed)
-        this.toggleTrash(this.props.todo._id, newTrashed)
+    const trashToDo = () => {
+        var newTrashed = !trashed
+        setTrashed(newTrashed);
+        console.log("NEW CHECK: ", trashed)
+        toggleTrash(props.todo._id, newTrashed)
     }
-    render() {
-        var textStyle = "toDoText"
-        if (this.state.checked == true) {
-            textStyle = "toDoText disabled"
-        }
-        if (this.state.checked == this.props.defaultDone) {
-            return (
-                <Card variant="outlined" className="updateToDo" style={{backgroundColor:"var(--sage)"}}>
+    var textStyle = "toDoText"
+    if (checked == true) {
+        textStyle = "toDoText disabled"
+    }
+    if (checked == props.defaultDone) {
+        return (
+            <Card variant="outlined" className="updateToDo" style={{ backgroundColor: "var(--sage)" }}>
 
-                    <div className="ToDoItem">
-                        {/* <div class={textStyle}>
-                            <div>{this.props.todo.title}</div>
-                            <div>{this.props.todo.description}</div>
-                        </div> */}
+                <div className="ToDoItem">
+                    {/* <div class={textStyle}>
+                        <div>{props.todo.title}</div>
+                        <div>{props.todo.description}</div>
+                    </div> */}
 
-                        <Inplace closable onClose={this.callUpdateToDo} className='ToDoContent'>
-                            <InplaceDisplay>
-                                <div className={textStyle}>
-                                    <div style={{fontWeight: "bold"}}>{this.state.titleText || this.props.todo.title}</div>
-                                    <div>{this.state.descriptionText || this.props.todo.description}</div>
-                                </div>
-                            </InplaceDisplay>
-                            <InplaceContent className="InplaceContent">
-                                <div className={textStyle}>
-                                    <TextField
-                                        id="standard-basic"
-                                        label="Title"
-                                        variant="standard"
-                                        size='small'
-                                        spellCheck="true"
-                                        value={this.state.titleText}
-                                        style={{fontWeight: "bold"}}
-                                        onChange={(e) => this.setText(e.target.value, this.props.todo._id, "title")} />
-                                    <TextField
-                                        id="outlined-multiline-flexible"
-                                        label="Description"
-                                        multiline
-                                        minRows={5}
-                                        maxRows={5}
-                                        spellCheck="true"
-                                        value={this.state.descriptionText}
-                                        onChange={(e) => this.setText(e.target.value, this.props.todo._id, "description")}
-                                    />
-                                    {/* <Button variant="outlined" id="editButton" onClick={this.callUpdateToDo}>Confirm</Button> */}
-                                </div>
-                                {/* <InputText value={this.state.titleText} onChange={(e) => this.setText(e.target.value, this.props.todo._id, "title")} autoFocus /> */}
-                            </InplaceContent>
-                        </Inplace>
+                    <Inplace closable onClose={callUpdateToDo} className='ToDoContent'>
+                        <InplaceDisplay>
+                            <div className={textStyle}>
+                                <div style={{ fontWeight: "bold" }}>{titleText || props.todo.title}</div>
+                                <div>{descriptionText || props.todo.description}</div>
+                            </div>
+                        </InplaceDisplay>
+                        <InplaceContent className="InplaceContent">
+                            <div className={textStyle}>
+                                <TextField
+                                    id="standard-basic"
+                                    label="Title"
+                                    variant="standard"
+                                    size='small'
+                                    spellCheck="true"
+                                    value={titleText}
+                                    style={{ fontWeight: "bold" }}
+                                    onChange={(e) => setText(e.target.value, props.todo._id, "title")} />
+                                <TextField
+                                    id="outlined-multiline-flexible"
+                                    label="Description"
+                                    multiline
+                                    minRows={5}
+                                    maxRows={5}
+                                    spellCheck="true"
+                                    value={descriptionText}
+                                    onChange={(e) => setText(e.target.value, props.todo._id, "description")}
+                                />
+                                {/* <Button variant="outlined" id="editButton" onClick={callUpdateToDo}>Confirm</Button> */}
+                            </div>
+                            {/* <InputText value={titleText} onChange={(e) => setText(e.target.value, props.todo._id, "title")} autoFocus /> */}
+                        </InplaceContent>
+                    </Inplace>
                     <div className='tools'>
                         <input type="checkbox"
-                            checked={this.state.checked}
-                            onChange={this.handleChange} 
-                            className='tool-item'/>
-                        <IconButton aria-label="delete" onClick={this.trashToDo}>
-                            <DeleteIcon className='tool-item'/>
+                            checked={checked}
+                            onChange={handleChange}
+                            className='tool-item' />
+                        <IconButton aria-label="delete" onClick={trashToDo}>
+                            <DeleteIcon className='tool-item' />
                         </IconButton>
                     </div>
                 </div>
-                </Card >
-            );
-        }
+            </Card >
+        );
     }
 }
 
-ToDoItem.contextType = toDoContext
 export default ToDoItem;

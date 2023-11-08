@@ -1,7 +1,7 @@
 import ToDoList from './ToDoList.js';
 import EditToDo from './EditToDo';
-import { Component, useContext } from 'react';
-import { ToDoProvider, toDoContext } from './toDoContext.js';
+import { Component, useContext, useState } from 'react';
+import { ToDoProvider, ToDoContext } from './toDoContext.js';
 import { Accordion, AccordionSummary, AccordionDetails, Typography, Card, Tab, Box } from '@mui/material';
 import { MdExpandMore, MdNoteAdd, MdClose } from "react-icons/md";
 import "./ToDo.css"
@@ -12,23 +12,26 @@ import Tabs from '@mui/material/Tabs';
 import AppContext from '../../contexts/AppContext.js';
 import { useNavigate } from 'react-router-dom';
 
-class ToDo extends Component {
-    setToDoData = (toDoData) => {
-        this.setState({ toDoData });
+function ToDo(props) {
+    const appContext = useContext(AppContext)
+    const toDoContext = useContext(ToDoContext)
+    const navigate = useNavigate()
+    const [toDoData, setToDoData] = useState([])
+    const [view, setView] = useState("1")
+    const [addMode, setAddMode] = useState(0)
+    var userInfo = appContext.userInfo
+    if (!userInfo) {
+        userInfo = sessionStorage.getItem("userInfo")
+        if (!userInfo || !userInfo.accessToken) {
+            console.log("Going home")
+            navigate("/",{replace:true})
+            return
+        }
     }
-    setView = (view) => {
-        this.setState({ view })
-    }
-    setAddMode = (addMode) => {
-        this.setState({ addMode })
-    }
-    state = {
-        toDoData: [],
-        view: "1",
-        addMode: 0
-    }
-    renderEdit = () => {
-        if (this.state.addMode) {
+    
+    
+    const renderEdit = () => {
+        if (addMode) {
             return (
                 <div className="editCluster">
                     <EditToDo></EditToDo>
@@ -40,7 +43,7 @@ class ToDo extends Component {
                     <button
                         className="addToDoButton btn-grad"
                         onClick={() => {
-                            this.setAddMode(!this.state.addMode)
+                            setAddMode(!addMode)
                         }}>
                         +
                     </button>
@@ -48,22 +51,21 @@ class ToDo extends Component {
             )
         }
     }
-    render() {
         return (
             <div className="App">
                 <AppContext.Consumer>
                     {(userInfo) => {
                         console.log("in userinfo consumer:",userInfo)
                         return (userInfo.userInfo && userInfo.userInfo.accessToken) ? (
-                        <toDoContext.Provider value={{ toDoData: this.state.toDoData, setToDoData: this.setToDoData, showEdit: this.state.addMode, toggleEdit: this.setAddMode }}>
+                        <ToDoContext.Provider value={{ toDoData: toDoData, setToDoData: setToDoData, showEdit: addMode, toggleEdit: setAddMode }}>
 
 
-                        <TabContext value={this.state.view}>
+                        <TabContext value={view}>
                             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                 <Tabs
-                                    value={this.state.view}
+                                    value={view}
                                     onChange={(event, newValue) => {
-                                        this.setState({ view: newValue })
+                                        setView(newValue)
                                     }}
                                     TabIndicatorProps={{ style: { background: 'var(--dark-green)' } }}
                                     sx={{
@@ -81,7 +83,7 @@ class ToDo extends Component {
 
                                 <TabPanel value="1" className="tabPanel">
                                     {
-                                        this.renderEdit()
+                                        renderEdit()
                                     }
                                     <ToDoList disabled={false} defaultDone={false} />
                                 </TabPanel>
@@ -93,10 +95,9 @@ class ToDo extends Component {
 
 
 
-                    </toDoContext.Provider>):<div></div>
+                    </ToDoContext.Provider>):<div></div>
                     }}
                 </AppContext.Consumer>
             </div>)
-    }
 }
 export default ToDo;
