@@ -3,8 +3,9 @@
     flex-direction: row;
     flex-wrap: wrap;
     gap:3em;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 .addNoteButton {
     width: fit-content;
@@ -14,8 +15,18 @@
     padding-top: 20;
     border-right: 0.25px solid #ececec
 }
+.noteListContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1em;
+    width: 100%;
+}
+.allNotesContainer {
+    display: flex;
+    flex-direction: column;
+}
 .home-view {
-    width: 100vw;
-    position: absolute;
-    left:0;
+    padding: 1em;
+    width: 100%;
 }

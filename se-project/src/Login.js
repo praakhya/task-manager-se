@@ -1,5 +1,5 @@
 import React, { Suspense, useState } from 'react'
-import './styles/App.css'
+import './App.css'
 import { BrowserRouter } from 'react-router-dom'
 import AppRouter from './router.jsx'
 
@@ -23,7 +23,6 @@ function Notes() {
 			<AppContext.Provider value={contextValue}>
 				<Suspense fallback={<div></div>}>
 					<BrowserRouter>
-					
 						<AppRouter />						
 					</BrowserRouter>
 				</Suspense>

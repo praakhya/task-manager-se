@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react'
-import NotesList from '../components/NotesList'
+import NotesList from './NoteList'
 import Button from 'react-bootstrap/esm/Button'
-import ManageNote from '../components/ManageNote'
-import "../Notes.css"
+import ManageNote from './ManageNote'
+import "./Notes.css"
 const AllNotes = (props) => {
 	const [isShowAddNote, setShowAddNote] = useState(false)
 
@@ -13,7 +13,7 @@ const AllNotes = (props) => {
 	}
 
 	return (
-		<div>
+		<div className="allNotesContainer">
 			<div className='allNotesHeader'>
 				<h1>All Notes</h1>
 				<div>

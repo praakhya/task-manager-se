@@ -15,11 +15,10 @@
 :root {
     --list-width: 30vw;
     --edit-width:40vw;
-    --blue: #D2E0FB;
-    --yellow:#F9F3CC;
-    --sage: #a3bb8d;
-    --dark-blue: #8EACCD;
-    --dark-green: #415033;
+    --baby-blue:#78C1F3;
+    --mint: #9BE8D8;
+    --light-green: #E2F6CA;
+    --lemon-yellow: #F8FDCF
 
 
 }
@@ -67,6 +66,7 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
+    background-color: transparent;
 }
 
 .auth-form-wrap {
@@ -112,7 +112,8 @@
     left: 0.8em
 }
 .icons {
-    font-size: 2em;
+    font-size: 1em;
+    margin-right: 1em;
 }
 .highestElevation {
     z-index: 102;

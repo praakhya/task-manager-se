@@ -3,7 +3,7 @@ import { useContext } from 'react'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form'
-import AppContext from '../../../../contexts/AppContext'
+import AppContext from '../../contexts/AppContext'
 import axios from 'axios'
 const baseUrl="/api"
 const ManageNote = (props) => {
@@ -70,7 +70,6 @@ const ManageNote = (props) => {
 				setError(true)
 				return
 			}
-			props.onManageNoteSuccess()
 			setError(false)
 		}
 	}

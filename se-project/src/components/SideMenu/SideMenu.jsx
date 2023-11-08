@@ -4,6 +4,8 @@ import { MdFavoriteBorder } from 'react-icons/md'
 import { BsTrash3 } from 'react-icons/bs'
 import { GrNotes } from 'react-icons/gr'
 import './SideMenu.css'
+import { ListItem } from '@mui/material'
+import ListGroupItem from 'react-bootstrap/esm/ListGroupItem'
 const SideMenu = () => {
 	const menuOptions = [
 		{
@@ -27,19 +29,19 @@ const SideMenu = () => {
 	]
 
 	return (
-		<ul>
+		<ListGroupItem>
 			{menuOptions.map((menuItem) => {
 				let Icon = menuItem.icon
 				return (
-					<li className={'side-menu-item'} key={menuItem.key}>
+					<ListItem className={'side-menu-item'} key={menuItem.key}>
 						<NavLink to={menuItem.path} style={{ textDecoration: 'none', color: '#1a1a1a', fontSize: 18 }}>
 							<Icon />
-							<span style={{ marginLeft: 6 }}>{menuItem.label}</span>
+							<span>{menuItem.label}</span>
 						</NavLink>
-					</li>
+					</ListItem>
 				)
 			})}
-		</ul>
+		</ListGroupItem>
 	)
 }
 

@@ -13,6 +13,8 @@
 .App {
     display: flex;
     flex-direction: column;
+    width: 100vw;
+    margin-top: 1em;
 }
 .ToDoItem {
     display: flex;
@@ -157,4 +159,17 @@
     display: flex;
     flex-direction: row;
     gap: 0.5em;
+    width: 100%;
+}
+
+.tab {
+    background-color: transparent;
+}
+.tabs {
+    display: flex;
+    flex-direction: row;
+}
+.list-group-tabs-example {
+    width: 100vw;
+    margin: 5em;
 }

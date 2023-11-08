@@ -1,12 +1,15 @@
 import React, { Component, useContext, useState } from 'react';
 import './ToDo.css'
 import Button from '@mui/material/Button';
-import { TextField, Card } from '@mui/material';
+import { TextField } from '@mui/material';
 import axios from 'axios';
 import { ToDoContext } from './toDoContext';
 import { MdExpandMore, MdNoteAdd, MdClose } from "react-icons/md";
 import AppContext from '../../contexts/AppContext';
-
+import Card from 'react-bootstrap/Card'
+import InputGroup from 'react-bootstrap/InputGroup'
+import FormText from 'react-bootstrap/FormText'
+import FormControl from 'react-bootstrap/FormControl'
 function EditToDo() {
     var toDoContext = useContext(ToDoContext)
     var appContext = useContext(AppContext)
@@ -78,10 +81,34 @@ function EditToDo() {
                 onClick={() => { toDoContext.toggleEdit(0) }}>
                 <MdClose />
             </button>
-            <Card variant="outlined" className="EditToDoCard">
+            <Card className="EditToDoCard">
+                <Card.Body className="EditToDo">
+                    <Card.Title>Write a new Task</Card.Title>
+                    <InputGroup className="mb-3">
+                        <FormControl
+                            placeholder="Title"
+                            aria-label="Title"
+                            aria-describedby="basic-addon1"
+                            value={title}
+                            onChange={changeTitle}
+                        />
+                    </InputGroup>
+                    <InputGroup className="mb-3">
+                        <FormControl
+                            placeholder="Description"
+                            aria-label="Description"
+                            aria-describedby="basic-addon1"
+                            value={description}
+                            onChange={changeDesc}
+                            as="textarea"
+                        />
+                    </InputGroup>
+                    <Button variant="primary" onClick={newToDo}>Submit</Button>
+                </Card.Body>
+            </Card>
 
-                <div className="EditToDo">
-                    <TextField
+                {/*<div className="EditToDo">
+                     <TextField
                         id="standard-basic"
                         label="Title"
                         variant="standard"
@@ -117,9 +144,8 @@ function EditToDo() {
                                 background: "none"
                             }
                         }}
-                    >Submit</Button>
-                </div>
-            </Card>
+                    >Submit</Button> 
+                    </div>*/}
         </div>
     )
 }

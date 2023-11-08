@@ -7,6 +7,7 @@ import AppContext from '../contexts/AppContext'
 import { BsCheck2Circle, BsList, BsStickies, BsStopwatch } from 'react-icons/bs'
 import "../App.css"
 import MiniDrawer from '../components/MiniDrawer'
+import Dropdown from 'react-bootstrap/Dropdown'
 const AppLayout = () => {
 	const { userInfo, setUserInfo } = useContext(AppContext)
 	const [navBar, setNavBar] = useState(false)
@@ -43,28 +44,47 @@ const AppLayout = () => {
 	return (
 		<div className="appDiv">
 			<div className="myNav">
+				<Dropdown>
+				{userInfo && userInfo.name ? <Dropdown.Toggle id="dropdown-basic" style={{ backgroundColor: "transparent", color: "var(--dark-green)", border: "none" }}>
+						<BsList className="icons menu"></BsList>
+					</Dropdown.Toggle> : <span></span>}
+
+					<Dropdown.Menu>
+						<Dropdown.Item href="/notes">
+							<BsStickies className="icons highestElevation" onClick={goToNotes}></BsStickies>
+							Notes
+						</Dropdown.Item>
+						<Dropdown.Item href="/todo">
+							<BsCheck2Circle className="icons highestElevation" onClick={goToToDo}></BsCheck2Circle>
+
+							To Do List
+						</Dropdown.Item>
+						<Dropdown.Item href="/pomodoro">
+							<BsStopwatch className="icons highestElevation" onClick={goToPomodoro}></BsStopwatch>
+
+							Pomodoro
+						</Dropdown.Item>
+					</Dropdown.Menu>
+				</Dropdown>
 				<div className='appLogo'>
-					{userInfo && userInfo.accessToken ?
-						<BsList onClick={toggleNavBar} className="icons menu"></BsList>
-						: <span></span>}
-					<span style={{ color: 'var(--sage)' }}>
+					<span style={{ color: 'var(--dark-green)' }}>
 						Ze
 					</span>
-					<span style={{ color: 'var(--dark-green)' }}>
+					<span style={{ color: 'var(--sage)' }}>
 						Me
 					</span>
 				</div>
-				<div style={{display:"flex", gap:"1em"}}>
-				<div>
-					{userInfo && userInfo.name ? (
-						<span>
-							<span>Welcome {userInfo.name}</span>
-							<span></span>
-						</span>
-					) : null}
-				</div>
-				<div>
-				{userInfo && userInfo.name ? (
+				<div style={{ display: "flex", gap: "1em" }}>
+					<div>
+						{userInfo && userInfo.name ? (
+							<span>
+								<span>Welcome {userInfo.name}</span>
+								<span></span>
+							</span>
+						) : null}
+					</div>
+					<div>
+						{userInfo && userInfo.name ? (
 							<span onClick={handleLogoutClick}>
 								<span>Logout</span>
 							</span>
@@ -73,17 +93,9 @@ const AppLayout = () => {
 								<span>Login</span>
 							</span>
 						)}
-				</div>
+					</div>
 				</div>
 			</div>
-
-			{userInfo && userInfo.accessToken ?
-				<nav className="sidenav" hidden={!navBar}>
-
-					<BsStickies className="icons highestElevation" onClick={goToNotes}></BsStickies>
-					<BsCheck2Circle className="icons highestElevation" onClick={goToToDo}></BsCheck2Circle>
-					<BsStopwatch className="icons highestElevation" onClick={goToPomodoro}></BsStopwatch>
-				</nav> : <span></span>}
 			{/* <Navbar className='app-nav-bar' style={{ paddingTop: 0, paddingBottom: 0, margin: "none", width:"100vw" }}>
 				<Container style={{ background: 'white' }}>
 					<Navbar.Brand href='/'>

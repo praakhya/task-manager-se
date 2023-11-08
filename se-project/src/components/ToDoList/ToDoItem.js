@@ -1,6 +1,6 @@
 import React, { Component, useState, useContext } from 'react';
 import './ToDo.css'
-import { Button, Card, Checkbox } from '@mui/material';
+import { Button, Checkbox } from '@mui/material';
 import { ToDoContext } from './toDoContext';
 import axios from 'axios';
 import { Inplace, InplaceDisplay, InplaceContent } from 'primereact/inplace';
@@ -11,6 +11,11 @@ import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { TextField } from '@mui/material';
 import AppContext from '../../contexts/AppContext';
+import Card from 'react-bootstrap/Card'
+import InputGroup from 'react-bootstrap/InputGroup'
+import FormText from 'react-bootstrap/FormText'
+import FormControl from 'react-bootstrap/FormControl'
+
 function ToDoItem(props) {
     console.log("props in ToDoitem:",props)
     const toDoContext = useContext(ToDoContext);
