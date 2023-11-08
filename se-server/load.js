@@ -3,16 +3,21 @@ const ToDo = require("./Models/ToDo");
 
 exports.getToDo = async (req,res) => {
     try {
-        const todo = await ToDo.find({});
+        var headers = req.get("Authorization").split(";")
+        var accessToken = headers[0].split("=")[1]
+        var username = headers[1].split("=")[1]
+        if (accessToken) {
+            const todo = await ToDo.find({"username":username});
         //console.log("In load: ",books);
-        const newtodo=[]
-        for (var i in todo) {
-            var t={}
-            t = {"_id":todo[i]._id.toHexString(), "title":todo[i].title, "description":todo[i].description, "done":todo[i].done, "trashed":todo[i].trashed}
-            newtodo.push(t)
-            console.log("converted: ",newtodo)
+            const newtodo=[]
+            for (var i in todo) {
+                var t={}
+                t = {"_id":todo[i]._id.toHexString(), "title":todo[i].title, "description":todo[i].description, "done":todo[i].done, "trashed":todo[i].trashed, "username":todo[i].username}
+                newtodo.push(t)
+                console.log("converted: ",newtodo)
+            }
+            return res.status(200).json(newtodo)
         }
-        return res.status(200).json(newtodo)
     }
     catch(err) {
         console.log("error getToDo: ", err);
@@ -23,12 +28,17 @@ exports.getToDo = async (req,res) => {
 };
 
 exports.addToDo = async (req,res) => {
+    var headers = req.get("Authorization").split(";")
+    var accessToken = headers[0].split("=")[1]
+    var username = headers[1].split("=")[1]
+    if (accessToken) {
     console.log("Final url is ", req.originalUrl)
     var todo = new ToDo({
         title:req.body.title,
         description:req.body.description,
         done: false,
-        trashed: false
+        trashed: false,
+        username: username
     })
     console.log("created todo: ",todo);
     try {
@@ -45,36 +55,46 @@ exports.addToDo = async (req,res) => {
         })
     }
 }
+}
 exports.completeToDo = async (req,res) => {
+    var headers = req.get("Authorization").split(";")
+    var accessToken = headers[0].split("=")[1]
+    var username = headers[1].split("=")[1]
     //console.log("Final url is ", req.originalUrl)
     //console.log("_id",req.params.id)
-    var todo = new ToDo({
-        _id:req.body._id,
-        done: req.body.done
-    })
-    //console.log("updation todo: ",todo);
-    try {
-        console.log("complete: ",todo)
-        var oldtodo = await ToDo.updateOne({_id: todo._id}, {done: todo.done})
-        console.log("update status: ",oldtodo)
-        var newtodo= await ToDo.findOne({_id: todo._id}).exec()
-        console.log("new to do: ",newtodo)
-        newtodo = {"title":newtodo.title, "description":newtodo.description, "done":newtodo.done, "_id":newtodo._id.toHexString(), "trashed":newtodo.trashed}
-        //console.log("returned: ",todo)
-        res.status(200).json(newtodo)
-    } 
-    catch (err) {
-        console.log("error:",err)
-        res.status(409).json({
-            message: "ToDo update unsuccessful",
-            error: err.message
+    if (accessToken) {
+        var todo = new ToDo({
+            _id:req.body._id,
+            done: req.body.done
         })
+        //console.log("updation todo: ",todo);
+        try {
+            console.log("complete: ",todo)
+            var oldtodo = await ToDo.updateOne({_id: todo._id, username:username}, {done: todo.done})
+            console.log("update status: ",oldtodo)
+            var newtodo= await ToDo.findOne({_id: todo._id}).exec()
+            console.log("new to do: ",newtodo)
+            newtodo = {"title":newtodo.title, "description":newtodo.description, "done":newtodo.done, "_id":newtodo._id.toHexString(), "trashed":newtodo.trashed}
+            //console.log("returned: ",todo)
+            res.status(200).json(newtodo)
+        } 
+        catch (err) {
+            console.log("error:",err)
+            res.status(409).json({
+                message: "ToDo update unsuccessful",
+                error: err.message
+            })
+        }
     }
 }
 
 exports.updateToDo = async (req,res) => {
     //console.log("Final url is ", req.originalUrl)
     //console.log("_id",req.params.id)
+    var headers = req.get("Authorization").split(";")
+    var accessToken = headers[0].split("=")[1]
+    var username = headers[1].split("=")[1]
+    if (accessToken) {
     console.log("req body: ",req.body)
     var todo={}
     if (req.body.label=="title") {
@@ -89,20 +109,21 @@ exports.updateToDo = async (req,res) => {
             description: req.body.description,
         })
     }
+
     
     //console.log("updation todo: ",todo);
     try {
         console.log("update: ",todo)
         if (req.body.label=="title") {
-            var oldtodo = await ToDo.updateOne({"_id": todo._id}, {"title": todo.title})
+            var oldtodo = await ToDo.updateOne({"_id": todo._id, "username":username}, {"title": todo.title})
         }
         else if (req.body.label=="description") {
-            var oldtodo = await ToDo.updateOne({"_id": todo._id}, {"description": todo.description})
+            var oldtodo = await ToDo.updateOne({"_id": todo._id, "username":username}, {"description": todo.description})
         }
         console.log("update status: ",oldtodo)
         var newtodo= await ToDo.findOne({_id: todo._id}).exec()
         console.log("new to do: ",newtodo)
-        newtodo = {"title":newtodo.title, "description":newtodo.description, "done":newtodo.done, "_id":newtodo._id.toHexString(), "trashed":newtodo.trashed}
+        newtodo = {"title":newtodo.title, "description":newtodo.description, "done":newtodo.done, "_id":newtodo._id.toHexString(), "trashed":newtodo.trashed, "usernamee":usernamee}
         //console.log("returned: ",todo)
         res.status(200).json(newtodo)
     } 
@@ -113,6 +134,7 @@ exports.updateToDo = async (req,res) => {
             error: err.message
         })
     }
+}
 }
 
 exports.deleteToDo = async(req, res) => {

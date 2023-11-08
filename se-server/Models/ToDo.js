@@ -11,6 +11,9 @@ const schema = new mongoDB.Schema({
     },
     trashed: {
         type: Boolean
+    },
+    username: {
+        type: String
     }
 })
 const ToDo = mongoDB.model("ToDo", schema, "ToDo");
