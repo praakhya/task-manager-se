@@ -19,7 +19,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use("/api", require("./appRoute"))
 
-app.use(express.static(path.join(__dirname,"../se-project/build")))
+// app.use(express.static(path.join(__dirname,"../se-project/build")))
+app.use(express.static(path.join(__dirname,"./public")))
 app.get("/*", (req, res) => {
   console.log("app.get(/*)") 
   res.sendFile(path.join(__dirname, "../se-project", "build", "index.html")); 
