@@ -63,10 +63,12 @@
     width: 100vw;
 }
 .appDiv {
-    height: 100vh;
     display: flex;
     flex-direction: column;
     background-color: transparent;
+    height: 100vh;
+    overflow-y: scroll;
+    position: relative;
 }
 
 .auth-form-wrap {
@@ -76,7 +78,6 @@
     margin-top: 32px;
 }
 .app-content {
-    height: 100vh;
 }
 .container {
     display: flex;

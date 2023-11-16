@@ -24,7 +24,7 @@ const AllNotes = (props) => {
 			</div>
 
 			<div>
-				<NotesList handleCreateNote={handleAddNote} />
+				<NotesList handleCreateNote={handleAddNote} favourites={true}/>
 			</div>
 			{isShowAddNote && (
 				<ManageNote

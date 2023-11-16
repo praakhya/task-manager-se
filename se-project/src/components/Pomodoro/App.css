@@ -56,7 +56,7 @@ label {
 .main {
   position: relative;
   width: 100vw;
-  height: calc(100vh - 0.2vh);
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;

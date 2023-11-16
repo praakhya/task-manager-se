@@ -44,15 +44,15 @@ function ToDo(props) {
         }
         else {
             return (
-                <div className="editCluster">
-                    <button
-                        className="addToDoButton btn-grad"
+                <ListGroup className="editCluster w-80">
+                    <ListGroup.Item
+                        className="addToDoButton"
                         onClick={() => {
                             setAddMode(!addMode)
                         }}>
-                        +
-                    </button>
-                </div>
+                        + Add a task
+                    </ListGroup.Item>
+                </ListGroup>
             )
         }
     }
@@ -64,9 +64,9 @@ function ToDo(props) {
                     return (userInfo.userInfo && userInfo.userInfo.accessToken) ? (
                         <ToDoContext.Provider value={{ toDoData: toDoData, setToDoData: setToDoData, showEdit: addMode, toggleEdit: setAddMode }}>
                             <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
-                                <Row style={{ width: "80vw", left: 0 }}>
-                                    <Col sm={2}>
-                                        <ListGroup >
+                                <Row>
+                                    <Col xs={12}>
+                                        <ListGroup horizontal class="w-80" style={{ width: "70vw", textAlign: "center" }}>
                                             <ListGroupItem action href="#link1" className='bg-success p-2 text-dark bg-opacity-50 border-0'>
                                                 Incomplete
                                             </ListGroupItem>
@@ -75,7 +75,9 @@ function ToDo(props) {
                                             </ListGroupItem>
                                         </ListGroup>
                                     </Col>
-                                    <Col lg={10}>
+                                </Row>
+                                <Row>
+                                    <Col xs={12}>
                                         <Tab.Content>
                                             <Tab.Pane eventKey="#link1">
                                                 {
@@ -83,50 +85,13 @@ function ToDo(props) {
                                                 }
                                                 <ToDoList disabled={false} defaultDone={false} />
                                             </Tab.Pane>
-                                            <Tab.Pane eventKey="#link2">                                    <ToDoList disabled={true} defaultDone={true} />
+                                            <Tab.Pane eventKey="#link2">
+                                                <ToDoList disabled={true} defaultDone={true} />
                                             </Tab.Pane>
                                         </Tab.Content>
                                     </Col>
                                 </Row>
                             </Tab.Container>
-
-
-                            {/* <TabContext value={view}>
-
-                            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                <Tabs
-                                    value={view}
-                                    onChange={(event, newValue) => {
-                                        setView(newValue)
-                                    }}
-                                    TabIndicatorProps={{ style: { background: 'var(--dark-green)' } }}
-                                    sx={{
-                                        ".Mui-selected": {
-                                            color: 'var(--dark-green)',
-                                            backgroundColor: "var(--sage)"
-                                        }
-                                    }}
-                                    textColor="var(--dark-green)">
-                                    <Tab label="Incomplete" value="1" />
-                                    <Tab label="Completed" value="2" />
-                                </Tabs>
-                            </Box>
-                            <div className="contentFlow">
-
-                                <TabPanel value="1" className="tabPanel">
-                                    {
-                                        renderEdit()
-                                    }
-                                    <ToDoList disabled={false} defaultDone={false} />
-                                </TabPanel>
-                                <TabPanel value="2" className="tabPanel">
-                                    <ToDoList disabled={true} defaultDone={true} />
-                                </TabPanel>
-                            </div>
-                        </TabContext> */}
-
-
-
                         </ToDoContext.Provider>) : <div></div>
                 }}
             </AppContext.Consumer>

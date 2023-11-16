@@ -152,7 +152,7 @@ const NotesList = (props, ref) => {
 						{notesList.map((note) => {
 							let date = new Date(note.createdAt)
 							let formattedDate = new Intl.DateTimeFormat('en-GB', { dateStyle: 'medium' }).format(date)
-
+							if (note.isFavourite==props.favourites) {
 							return (
 								<div key={note._id}>
 									<Card style={{ width: '15em' }}>
@@ -196,7 +196,10 @@ const NotesList = (props, ref) => {
 											</Card.Footer>
 										</Card>
 								</div>
-							)
+							)}
+							else {
+								return
+							}
 							})}
 						</div>
 					) : (

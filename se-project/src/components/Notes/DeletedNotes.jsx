@@ -6,7 +6,7 @@ const AllNotes = (props) => {
 		<div>
 			<div>Recently Deleted Notes</div>
 			<div>
-				<NotesList />
+				<NotesList favourites={false}/>
 			</div>
 		</div>
 	)

@@ -10,6 +10,7 @@ import Card from 'react-bootstrap/Card'
 import InputGroup from 'react-bootstrap/InputGroup'
 import FormText from 'react-bootstrap/FormText'
 import FormControl from 'react-bootstrap/FormControl'
+import { ListGroup } from 'react-bootstrap';
 function EditToDo() {
     var toDoContext = useContext(ToDoContext)
     var appContext = useContext(AppContext)
@@ -76,14 +77,14 @@ function EditToDo() {
     console.log("edittodo render")
 
     return (
-        <div className='editCluster'>
-            <button className="addToDoButton btn-grad closeButton"
-                onClick={() => { toDoContext.toggleEdit(0) }}>
-                <MdClose />
-            </button>
-            <Card className="EditToDoCard">
-                <Card.Body className="EditToDo">
-                    <Card.Title>Write a new Task</Card.Title>
+        <ListGroup horizontal className='editCluster' style={{width:"80vw"}}>
+            <ListGroup.Item className="addToDoButton closeButton"
+                    onClick={() => { toDoContext.toggleEdit(0) }}>
+                    <MdClose />
+            </ListGroup.Item>
+            <ListGroup.Item>
+                <div className="EditToDo">
+                    <span>Write a new Task</span>
                     <InputGroup className="mb-3">
                         <FormControl
                             placeholder="Title"
@@ -104,49 +105,9 @@ function EditToDo() {
                         />
                     </InputGroup>
                     <Button variant="primary" onClick={newToDo}>Submit</Button>
-                </Card.Body>
-            </Card>
-
-                {/*<div className="EditToDo">
-                     <TextField
-                        id="standard-basic"
-                        label="Title"
-                        variant="standard"
-                        size='small'
-                        spellCheck="true"
-                        value={title}
-                        onChange={changeTitle}
-                        className='textField'
-                        sx={{ width: "60vw" }} />
-                    <TextField
-                        id="outlined-multiline-flexible"
-                        label="Description"
-                        multiline
-                        minRows={1}
-                        maxRows={5}
-                        spellCheck="true"
-                        value={description}
-                        onChange={changeDesc}
-                        className='textField'
-                    />
-                    <Button
-                        variant="outlined" id="editButton" onClick={newToDo}
-                        sx={{
-                            color: "var(--dark-green)",
-                            borderColor: "var(--dark-green)",
-                            "&:hover": {
-                                boxShadow: "none",
-                                background: "var(--sage)",
-                                borderColor: "var(--sage)"
-                            },
-                            "&:active": {
-                                boxShadow: "none",
-                                background: "none"
-                            }
-                        }}
-                    >Submit</Button> 
-                    </div>*/}
-        </div>
+                </div>
+            </ListGroup.Item>
+        </ListGroup>
     )
 }
 export default EditToDo

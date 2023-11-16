@@ -1,18 +1,16 @@
 .carousel {
-  width: 600px;
-  height: 380px;
-  margin: auto;
-  box-shadow: 4px 8px 16px rgba(0, 0, 0, 0.2);
   transition: box-shadow 0.3s ease;
   display: flex;
-  align-items: center;
+  position: absolute;
+  top: 0em;
+  left:0em;
 
 }
   .carousel-control-prev {
-    height: 300px;
+    height: 100%;
   }
   .carousel-control-next {
-    height: 300px;
+    height: 100%;
   }
   
   .carousel .carousel-control-prev-icon {
@@ -30,11 +28,10 @@
   }
   
   .App1 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 70vh; 
-    
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    left: 0em;
   }
   
 

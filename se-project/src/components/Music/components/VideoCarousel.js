@@ -1,9 +1,9 @@
 import "./VideoCarousel.css";
 import React from "react";
 import { Carousel } from "react-bootstrap";
-import Vid1 from "./videos/vid1.mp4";
-import Vid2 from "./videos/vid2.mp4";
-import Vid3 from "./videos/vid3.mp4";
+import Vid1 from "../videos/vid1.mp4";
+import Vid2 from "../videos/vid2.mp4";
+import Vid3 from "../videos/vid3.mp4";
 import ReactPlayer from "react-player";
 import "bootstrap/dist/css/bootstrap.css";
 
@@ -40,6 +40,9 @@ const VideoCarousel = () => {
                 pip={true}
                 controls={true}
                 playing={false}
+                wrapper="div"
+                height="95vh"
+                style={{marginLeft:"none", paddingLeft:"none"}}
               />
             </Carousel.Item>
           );

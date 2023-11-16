@@ -1,4 +1,4 @@
-import React, { Component, useState, useContext } from 'react';
+import React, { Component, useState, useContext, useEffect } from 'react';
 import './ToDo.css'
 import { Button, Checkbox } from '@mui/material';
 import { ToDoContext } from './toDoContext';
@@ -15,16 +15,17 @@ import Card from 'react-bootstrap/Card'
 import InputGroup from 'react-bootstrap/InputGroup'
 import FormText from 'react-bootstrap/FormText'
 import FormControl from 'react-bootstrap/FormControl'
+import Form from 'react-bootstrap/Form'
+import { ListGroup, Badge, ListGroupItem } from 'react-bootstrap';
 
 function ToDoItem(props) {
-    console.log("props in ToDoitem:",props)
+    console.log("props in ToDoitem:", props)
     const toDoContext = useContext(ToDoContext);
     const appContext = useContext(AppContext);
-    const [checked,setChecked] = useState(props.defaultDone)
+    const [checked, setChecked] = useState(props.defaultDone)
     const [titleText, setTitleText] = useState(props.todo.title)
     const [descriptionText, setDescriptionText] = useState(props.todo.description)
     const [trashed, setTrashed] = useState(props.defaultTrash)
-    
     const getHeader = () => {
         var headers = {}
         if (appContext.userInfo) {
@@ -34,15 +35,15 @@ function ToDoItem(props) {
             return headers
         }
         headers = {
-                Authorization: 'accessToken=;username='
-            }
+            Authorization: 'accessToken=;username='
+        }
         return headers
     }
     const updateToDo = (text, id, label) => {
         var header = getHeader()
         console.log("in update ToDo: id=", id, "text=", text, "label=", label);
         var baseUrl = "/api";
-        axios.put(baseUrl + '/load/ToDo/update', { "_id": id, [label]: text, "label": label }, {headers: header})
+        axios.put(baseUrl + '/load/ToDo/update', { "_id": id, [label]: text, "label": label }, { headers: header })
             .then(response => {
                 console.log("response on edit: ", response)
                 addUpdatedToDo(response.data)
@@ -68,32 +69,43 @@ function ToDoItem(props) {
     }
     const addCheckedToDo = (todo) => {
         var list = toDoContext.toDoData;
+        var indexOfObject;
         for (var i in list) {
             if (list[i]._id == todo._id) {
-                list[i].done = todo.done
+                indexOfObject = list.indexOf(list[i])
             }
         }
+        list[indexOfObject].done = todo.done
         toDoContext.setToDoData(list)
         console.log(toDoContext.toDoData)
     }
     const addTrashedToDo = (todo) => {
         var list = toDoContext.toDoData;
+        var indexOfObject;
         for (var i in list) {
             if (list[i]._id == todo._id) {
-                list[i].trashed = todo.trashed
+                indexOfObject = list.indexOf(list[i])
+                break
             }
         }
-        toDoContext.setToDoData(list)
+        list[indexOfObject].trashed = todo.trashed
+        var newtodo = list.filter((t) => { return t._id != todo._id })
+        var deleted = list.filter((t) => { return t._id == todo._id })
+        toDoContext.setToDoData(newtodo)
+        toDoContext.setDeleted(deleted)
         console.log(toDoContext.toDoData)
     }
-    const addUpdatedToDo= (todo) => {
+    const addUpdatedToDo = (todo) => {
         var list = toDoContext.toDoData;
+        var indexOfObject;
         for (var i in list) {
             if (list[i]._id == todo._id) {
-                list[i].title = todo.title
-                list[i].description = todo.description
+                indexOfObject = list.indexOf(list[i])
+                break
             }
         }
+        list[indexOfObject].title = todo.title
+        list[indexOfObject].description = todo.description
         toDoContext.setToDoData(list)
         console.log(toDoContext.toDoData)
     }
@@ -101,7 +113,7 @@ function ToDoItem(props) {
         console.log("in complete ToDo: ", id, done);
         var baseUrl = "/api";
         var header = getHeader()
-        axios.put(baseUrl + '/load/todo/complete', { "_id": id, "done": done }, {headers:header})
+        axios.put(baseUrl + '/load/todo/complete', { "_id": id, "done": done }, { headers: header })
             .then(response => {
                 console.log("response on edit: ", response)
                 addCheckedToDo(response.data)
@@ -114,7 +126,7 @@ function ToDoItem(props) {
         console.log("in complete ToDo: ", id, trashed);
         var baseUrl = "/api";
         var header = getHeader()
-        axios.put(baseUrl + '/load/ToDo/trash', { "_id": id, "trashed": trashed },{headers:header})
+        axios.put(baseUrl + '/load/ToDo/trash', { "_id": id, "trashed": trashed }, { headers: header })
             .then(response => {
                 console.log("response on trash: ", response)
                 addTrashedToDo(response.data)
@@ -141,58 +153,50 @@ function ToDoItem(props) {
     }
     if (checked == props.defaultDone) {
         return (
-            <Card variant="outlined" className="updateToDo" style={{ backgroundColor: "var(--sage)" }}>
 
-                <div className="ToDoItem">
-                    {/* <div class={textStyle}>
-                        <div>{props.todo.title}</div>
-                        <div>{props.todo.description}</div>
-                    </div> */}
 
-                    <Inplace closable onClose={callUpdateToDo} className='ToDoContent'>
-                        <InplaceDisplay>
-                            <div className={textStyle}>
-                                <div style={{ fontWeight: "bold" }}>{titleText || props.todo.title}</div>
-                                <div>{descriptionText || props.todo.description}</div>
-                            </div>
-                        </InplaceDisplay>
-                        <InplaceContent className="InplaceContent">
-                            <div className={textStyle}>
-                                <TextField
-                                    id="standard-basic"
-                                    label="Title"
-                                    variant="standard"
-                                    size='small'
-                                    spellCheck="true"
-                                    value={titleText}
-                                    style={{ fontWeight: "bold" }}
-                                    onChange={(e) => setText(e.target.value, props.todo._id, "title")} />
-                                <TextField
-                                    id="outlined-multiline-flexible"
-                                    label="Description"
-                                    multiline
-                                    minRows={5}
-                                    maxRows={5}
-                                    spellCheck="true"
-                                    value={descriptionText}
-                                    onChange={(e) => setText(e.target.value, props.todo._id, "description")}
-                                />
-                                {/* <Button variant="outlined" id="editButton" onClick={callUpdateToDo}>Confirm</Button> */}
-                            </div>
-                            {/* <InputText value={titleText} onChange={(e) => setText(e.target.value, props.todo._id, "title")} autoFocus /> */}
-                        </InplaceContent>
-                    </Inplace>
-                    <div className='tools'>
-                        <input type="checkbox"
-                            checked={checked}
-                            onChange={handleChange}
-                            className='tool-item' />
-                        <IconButton aria-label="delete" onClick={trashToDo}>
-                            <DeleteIcon className='tool-item' />
-                        </IconButton>
-                    </div>
-                </div>
-            </Card >
+            <ListGroup.Item
+                className="d-flex flex-row justify-content-between align-items-start"
+            >
+                <Inplace closable onClose={callUpdateToDo} className='ToDoContent'>
+                    <InplaceDisplay>
+                        <div className="w-80">
+                            <div className="fw-bold">{titleText}</div>
+                            {descriptionText}
+                        
+                        </div>
+                    </InplaceDisplay>
+                    <InplaceContent>
+                        <Form.Group >
+                            <Form.Label>Title</Form.Label>
+                            <Form.Control
+                                type='text'
+                                placeholder='Enter title'
+                                value={titleText}
+                                onChange={(e) => setText(e.target.value, props.todo._id, "title")}
+                            />
+                        </Form.Group>
+                        <Form.Group >
+                            <Form.Label>Description</Form.Label>
+                            <Form.Control
+                                type='text'
+                                placeholder='Enter Description'
+                                value={descriptionText}
+                                onChange={(e) => setText(e.target.value, props.todo._id, "description")}
+                            />
+                        </Form.Group>
+                    </InplaceContent>
+                </Inplace>
+                <div className='tools'>
+                            <input type="checkbox"
+                                checked={checked}
+                                onChange={handleChange}
+                                className='tool-item' />
+                            <DeleteIcon className='tool-item trash' onClick={trashToDo} />
+                        </div>
+            </ListGroup.Item>
+
+
         );
     }
 }

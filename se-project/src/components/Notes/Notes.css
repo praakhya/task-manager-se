@@ -11,7 +11,7 @@
     width: fit-content;
 }
 .sideMenuContainer{
-    height: calc(100vh - 60px); 
+    
     padding-top: 20;
     border-right: 0.25px solid #ececec
 }

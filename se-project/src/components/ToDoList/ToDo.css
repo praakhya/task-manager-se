@@ -13,6 +13,7 @@
 .App {
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 100vw;
     margin-top: 1em;
 }
@@ -32,18 +33,7 @@
 
 }
 
-.EditToDo {
-    display: flex;
-    flex-direction: column;
-    width: fit-content;
-    gap: 0.5em;
-}
-.EditToDoCard {
-    width: fit-content;
-    align-self: center;
-    padding:  1em;
-    position: relative;
-}
+
 #editButton {
     align-self: flex-end;
     width: fit-content;
@@ -56,7 +46,6 @@
 }
 .disabled {
     text-decoration: line-through;
-    max-height: var(--list-width);
     overflow-y: hidden;
 }
 .completed {
@@ -78,6 +67,7 @@
 .tools {
     display: flex;
     flex-direction: column;
+    gap:0.5em;
 }
 .toDoText-editmode {
     font-family: 'Roboto', sans-serif;
@@ -85,59 +75,62 @@
     flex-direction: column;
     gap: 0em;
     width: 60vw;
-
 }
 .todolist {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     align-items: flex-start;
-    width: fit-content;
+    width: 70vw;
     padding: 1em;
     height: fit-content;
 }
 .addToDoButton {
-    width: 2em;
-    height: 2em;
     color: var(--dark-green);
-    font-size: "1em";
-    justify-self: "center";
-    border: none;
-    border-radius: 1em;
-    padding: 0.2em;
-    font-weight: bolder;
-    font-size:xx-large;
+    background-color: var(--sage);
+    width: fit-content;
+    text-shadow: none;
+    padding: 0.5em;
+    border-radius: 0.5em;
+
 }
 .closeButton {
-    color: var(--dark-green);
+    /*color: var(--dark-green);*/
     height: 100%;
     border-radius: 0.25em;
 }
-         
-.btn-grad {
-    background-image: linear-gradient(to right, #DAD299 0%, #B0DAB9  51%, #DAD299  100%);
-    transition: 0.5s;
-    background-size: 200% auto;
-    box-shadow: 0 0 20px #eee;
-    border:none;
-  }
-
-  .btn-grad:hover {
-    background-position: right center; /* change the direction of the change here */
-    color: #fff;
-  }
+.addToDoButton:hover {
+    background-color: var(--sage);
+}
+.toDoContent-display {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
  
 .p-inplace{
     border: none;
     font-family: 'Roboto', sans-serif;
 }
-
+.p-inplace-content-close {
+    color:black;
+    box-shadow: none;
+}
 .tool-item {
     color: var(--dark-green);
     accent-color: var(--dark-green);
 }
+.trash {
+    justify-self: flex-end;
+}
+.trash:hover {
+    background-color: var(--sage);
+    border-radius: 100%;
+    padding: 0.1em;
+    margin: 0.1em;
+}
 .ToDoContent {
-    max-width: 50em;
+    width:80vw;
 }
 .ToDoContent > * {
     overflow-wrap: break-word;
@@ -171,5 +164,4 @@
 }
 .list-group-tabs-example {
     width: 100vw;
-    margin: 5em;
 }

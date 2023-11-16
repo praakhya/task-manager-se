@@ -123,7 +123,7 @@ exports.updateToDo = async (req,res) => {
         console.log("update status: ",oldtodo)
         var newtodo= await ToDo.findOne({_id: todo._id}).exec()
         console.log("new to do: ",newtodo)
-        newtodo = {"title":newtodo.title, "description":newtodo.description, "done":newtodo.done, "_id":newtodo._id.toHexString(), "trashed":newtodo.trashed, "usernamee":usernamee}
+        newtodo = {"title":newtodo.title, "description":newtodo.description, "done":newtodo.done, "_id":newtodo._id.toHexString(), "trashed":newtodo.trashed, "username":username}
         //console.log("returned: ",todo)
         res.status(200).json(newtodo)
     } 

@@ -1,9 +1,11 @@
-import React, { Component, useContext } from 'react';
+import React, { Component, useContext, useEffect } from 'react';
 import './ToDo.css'
 import ToDoItem from './ToDoItem';
 import axios from 'axios';
 import { ToDoContext } from './toDoContext';
 import AppContext from '../../contexts/AppContext';
+import { ListGroup, Badge } from 'react-bootstrap';
+import { ListItem } from '@mui/material';
 function ToDoList(props) {
   const toDoContext = useContext(ToDoContext)
   const appContext = useContext(AppContext)
@@ -101,14 +103,6 @@ function ToDoList(props) {
     }
   ]
 
-  //        const context = this.context;
-  //It will get the data from context, and put it into the state.
-  //      this.setState({ toDoData: context.toDoData });
-
-  //    this.getToDo = this.getToDo.bind(this)
-  //  this.initToDoData = this.initToDoData.bind(this)
-  //this.setItemList = this.setItemList.bind(this)
-
   const getHeader = () => {
     var headers = {}
     if (appContext.userInfo) {
@@ -125,7 +119,7 @@ function ToDoList(props) {
   const getToDo = () => {
     console.log("in get ToDo");
     var baseUrl = "/api";
-    var header = this.getHeader()
+    var header = getHeader()
     axios.get(baseUrl + '/load/todo', { headers: header })
       .then(response => {
         if (response.status != 200) {
@@ -135,11 +129,11 @@ function ToDoList(props) {
       })
       .then(data => {
         console.log("data: ", data)
-        this.setItemList(data)
+        setItemList(data)
       })
       .catch((err) => {
         console.log("err /api", err);
-        this.setItemList(this.placeholder)
+        setItemList(placeholder)
       });
   }
   const initToDoData = (data) => {
@@ -150,24 +144,29 @@ function ToDoList(props) {
   }
   const setItemList = (response) => {
     var temp = []
+    console.log("response:",response)
     for (let todo of response) {
       temp.push({
         "title": todo.title,
         "description": todo.description,
         "done": todo.done,
         "_id": todo._id,
-        "trashed": todo.trashed
+        "trashed": todo.trashed,
+        "username": todo.username
       })
     }
     console.log("immediated response: ", response)
-    this.initToDoData(temp)
+    initToDoData(temp)
     console.log("context var: ", toDoContext)
   }
-  const componentDidMount = () => {
-    console.log("before getToDo")
-    this.getToDo()
-    console.log("ToDoList mounted")
-  }
+  useEffect(()=>{
+    if (toDoContext.toDoData.length==0) {
+      getToDo()
+    }
+  },[toDoContext.toDoData,appContext,itemList])
+  console.log("TODODATA:",toDoContext.toDoData)
+  console.log("TODO was EMPTY:",toDoContext.toDoData.length == 0)
+  console.log("TODODATA:",toDoContext.toDoData)
   var itemList = []
   for (let todo of toDoContext.toDoData) {
     console.log("TODOLIST: todo done: ", todo.done, "default done: ", props.defaultDone, "trashed: ", todo.trashed)
@@ -176,9 +175,10 @@ function ToDoList(props) {
   }
   console.log("itemList: ", props.defaultDone, itemList)
   return (
-    <div className="todolist">
+    
+    <ListGroup className="todolist" style={{width:"100%"}}>
       {itemList}
-    </div>
+    </ListGroup>
   );
 }
 
