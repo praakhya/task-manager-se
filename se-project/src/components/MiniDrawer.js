@@ -1,6 +1,6 @@
 import { IconButton } from "@mui/material"
 import { useContext, useState } from "react";
-import { MdMenu, MdStickyNote2, MdTaskAlt, MdOutlineTimer } from "react-icons/md";
+import { MdMenu, MdStickyNote2, MdTaskAlt, MdOutlineTimer,MdMusicNote } from "react-icons/md";
 import { useNavigate, Outlet } from "react-router-dom";
 import AppContext from "../contexts/AppContext";
 import "../App.css"
@@ -25,6 +25,9 @@ function MiniDrawer() {
   const goToPomodoro = () => {
     navigate("/pomodoro")
   }
+  const goToMusicPlayer = () => {
+    navigate("/musicplayer")
+  }
   return (
     <div className="fullSideNav">
       <MdMenu onClick={toggleNavBar} className="icons"></MdMenu>
@@ -32,6 +35,7 @@ function MiniDrawer() {
         <MdStickyNote2 className="icons" onClick={goToNotes}></MdStickyNote2>
         <MdTaskAlt className="icons" onClick={goToToDo}></MdTaskAlt>
         <MdOutlineTimer className="icons" onClick={goToPomodoro}></MdOutlineTimer>
+        <MdMusicNote className="icons" onClick={goToMusicPlayer}></MdMusicNote>
       </nav>
     </div>
   )

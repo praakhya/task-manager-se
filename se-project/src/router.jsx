@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { Routes, Route } from 'react-router-dom'
+import MusicPlayer from "./components/Music/MusicPlayer"
 import Pomodoro from "./components/Pomodoro/Pomodoro"
 import ToDo from './components/ToDoList/ToDo'
 import MiniDrawer from './components/MiniDrawer'
@@ -30,6 +31,7 @@ const AppRouter = () => {
 						<Route path='deleted' element={<DeletedNotesView />} />
 					</Route>
 					<Route path='/pomodoro' element={<Pomodoro></Pomodoro>}/>
+					<Route path='/musicplayer' element={<MusicPlayer></MusicPlayer>}/>
 					<Route path='/todo' element={<ToDo/>}/>
 				<Route path='*' element={<NotFoundView />} />
 			</Route>

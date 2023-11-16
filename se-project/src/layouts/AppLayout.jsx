@@ -4,7 +4,7 @@ import { useNavigate, Outlet } from 'react-router-dom'
 import Container from 'react-bootstrap/Container'
 import Navbar from 'react-bootstrap/Navbar'
 import AppContext from '../contexts/AppContext'
-import { BsCheck2Circle, BsList, BsStickies, BsStopwatch } from 'react-icons/bs'
+import { BsCheck2Circle, BsList, BsStickies, BsStopwatch,BsMusicNoteBeamed } from 'react-icons/bs'
 import "../App.css"
 import MiniDrawer from '../components/MiniDrawer'
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -30,6 +30,9 @@ const AppLayout = () => {
 	}
 	const goToPomodoro = () => {
 		navigate("/pomodoro")
+	}
+	const goToMusicPlayer = () => {
+		navigate("/musicplayer")
 	}
 	const handleLogoutClick = (e) => {
 		setUserInfo(null)
@@ -63,6 +66,11 @@ const AppLayout = () => {
 							<BsStopwatch className="icons highestElevation" onClick={goToPomodoro}></BsStopwatch>
 
 							Pomodoro
+						</Dropdown.Item>
+						<Dropdown.Item href="/musicplayer">
+							<BsMusicNoteBeamed className="icons highestElevation" onClick={goToMusicPlayer}></BsMusicNoteBeamed>
+
+							Focus Music
 						</Dropdown.Item>
 					</Dropdown.Menu>
 				</Dropdown>

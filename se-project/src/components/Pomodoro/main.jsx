@@ -1,5 +1,5 @@
 import React from 'react'
-import video4 from './assets/video5.mp4'
+import video4 from './video5.mp4'
 import "./App.css"
 
 const Main = () =>{

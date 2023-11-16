@@ -56,23 +56,33 @@ const handleCreateNote = function (req, res) {
 
 //---------------Update Note --------------------
 const handleUpdateNote = async (req, res) => {
-	let data = req.body
-	console.log('Note:update: Request Data:', JSON.stringify(data))
+    try {
+        let data = req.body;
+        console.log('Note:update: Request Data:', JSON.stringify(data));
 
-	if (!data.noteId) {
-		res.send({ status: 'error', message: 'Note Id is required!' })
-		return
-	}
+        if (!data.noteId) {
+            res.status(400).json({ status: 'error', message: 'Note Id is required!' });
+            return;
+        }
 
-	NotesModel.findOneAndUpdate({ _id: data.noteId }, { title: data.title, description: data.description }, { upsert: true }, (err, doc) => {
-		if (err) {
-			console.log('Note:Update -  Error: ', err)
-			res.send({ status: 'error', message: 'Error in Update' })
-			return
-		}
-		res.send({ status: 'success' })
-	})
-}
+        const updatedNote = await NotesModel.findOneAndUpdate(
+            { _id: data.noteId },
+            { title: data.title, description: data.description },
+            { upsert: true, new: true } // Add { new: true } to return the updated document
+        );
+
+        if (!updatedNote) {
+            res.status(404).json({ status: 'error', message: 'Note not found' });
+            return;
+        }
+
+        res.json({ status: 'success', updatedNote });
+    } catch (err) {
+        console.log('Note:Update - Error: ', err);
+        res.status(500).json({ status: 'error', message: 'Error in Update' });
+    }
+};
+
 
 //---------------Delete Note --------------------
 const handleDeleteNote = function (req, res) {
@@ -95,22 +105,25 @@ const handleDeleteNote = function (req, res) {
 
 //---------------Mark As Favourite --------------------
 const handleMarkAsFavourite = (req, res) => {
-	console.log('Note:Mark as Favourite: Request Data:', JSON.stringify(req.body))
+    console.log('Note: Mark as Favourite: Request Data:', JSON.stringify(req.body));
 
-	let data = req.body
+    let data = req.body;
 
-	if (!data.noteId) {
-		res.send({ status: 'error', message: 'Note Id is required!' })
-		return
-	}
+    if (!data.noteId) {
+        res.send({ status: 'error', message: 'Note Id is required!' });
+        return;
+    }
 
-	NotesModel.findOneAndUpdate({ _id: data.noteId }, { isFavourite: data.isFavourite }, { upsert: true }).exec().then((doc) => {
-		console.log('found and update response:',doc)
-			res.send({ status: 'success' })
-	}).catch(()=>{
-		res.send({ status: 'error', message: 'Error in Update' })
-	})
-}
+    NotesModel.findOneAndUpdate({ _id: data.noteId }, { isFavourite: data.isFavourite }, { upsert: true }).exec()
+        .then((doc) => {
+            console.log('found and update response:', doc);
+            res.send({ status: 'success' });
+        })
+        .catch((error) => {
+            console.error('Error in Update:', error);
+            res.send({ status: 'error', message: 'Error in Update' });
+        });
+};
 
 module.exports = {
 	handleGetNotes,
