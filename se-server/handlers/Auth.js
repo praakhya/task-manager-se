@@ -1,8 +1,8 @@
 let mongoose = require('mongoose')
-const UserModel = require('./../models/User')
+const UserModel = require('./../Models/User')
 const bcrypt = require('bcryptjs')
 const crypto = require('crypto')
-const User = require('./../models/User')
+const User = require('./../Models/User')
 
 const handleLogin = async (req, res) => {
 	let data = req.body

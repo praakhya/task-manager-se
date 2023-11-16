@@ -1,4 +1,4 @@
-let NotesModel = require('../models/Notes')
+let NotesModel = require('../Models/Notes')
 const http = require('http')
 
 //---------------Get Notes --------------------
