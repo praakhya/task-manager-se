@@ -26,7 +26,7 @@ app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "../se-project", "build", "index.html")); 
 });
 
-const port = 3000
+const port = 8080
 const connectDB = require("./connect");
 
 const server = app.listen(port, () => {
