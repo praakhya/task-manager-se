@@ -23,7 +23,8 @@ app.use("/api", require("./appRoute"))
 app.use(express.static(path.join(__dirname,"./public")))
 app.get("/*", (req, res) => {
   console.log("app.get(/*)") 
-  res.sendFile(path.join(__dirname, "../se-project", "build", "index.html")); 
+//  res.sendFile(path.join(__dirname, "../se-project", "build", "index.html")); 
+  res.sendFile(path.join(__dirname, "public", "index.html")); 
 });
 
 const port = 8080
