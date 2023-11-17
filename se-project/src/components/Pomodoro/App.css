@@ -60,6 +60,9 @@ label {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-image: url("./assets/PomodoroBg.png");
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 video {
