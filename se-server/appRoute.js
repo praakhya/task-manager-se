@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path')
 const AuthHandler = require('./handlers/Auth')
 const NoteHandler = require('./handlers/NoteHandler')
+const MusicHandler = require('./handlers/MusicHandler')
 const user = require('./Auth').user
 
 const router = express.Router();
@@ -23,4 +24,8 @@ router.route('/load/note', user.ensureAuthenticated).post(NoteHandler.handleCrea
 router.route('/load/note', user.ensureAuthenticated).put(NoteHandler.handleUpdateNote)
 router.route('/load/note/:noteId', user.ensureAuthenticated).delete(NoteHandler.handleDeleteNote)
 router.route('/load/note/favourite', user.ensureAuthenticated).post(NoteHandler.handleMarkAsFavourite)
+
+router.route('/load/music', user.ensureAuthenticated).get(MusicHandler.handleGetMusicList)
+router.route('/load/music/:id', user.ensureAuthenticated).delete(MusicHandler.handleDeleteMusic)
+router.route('/load/music', user.ensureAuthenticated).post(MusicHandler.handleCreateMusic)
 module.exports = router;
